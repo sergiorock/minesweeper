@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :set_game, only: [:show, :edit, :update, :destroy, :reveal]
+  before_action :set_game, only: [:show, :edit, :update, :destroy, :reveal, :flag]
 
   # GET /games
   # GET /games.json
@@ -94,6 +94,39 @@ class GamesController < ApplicationController
         end
       end
     end
+  end
+
+  def flag
+    x = params[:x]
+    y = params[:y]
+    status = params[:status]
+
+    cell = @game.cells.find_by(x: x, y: y)
+
+    if cell.status == status
+      cell.update(status: :'')
+
+      respond_to do |format|
+        format.html { redirect_to @game, notice: 'Limpiaste una celda' }
+        format.json { render json: @game, status: :ok}
+      end
+
+    else
+      cell.update(status: status)
+
+      if cell.status == 'flag'
+        respond_to do |format|
+          format.html { redirect_to @game, notice: 'Flagueaste una celda' }
+          format.json { render json: @game, status: :ok}
+        end
+      else
+        respond_to do |format|
+          format.html { redirect_to @game, notice: 'Marcaste una celda' }
+          format.json { render json: @game, status: :ok}
+        end
+      end
+    end
+
   end
 
   private

@@ -32,15 +32,29 @@
   <% for r in 1..@game.rows %>
     <tr>
       <% for c in 1..@game.columns %>
-        <% if @game.cells.find_by(x: r, y: c)&.is_revealed == nil || @game.cells.find_by(x: r, y: c)&.is_revealed == false %>
-          <td>
-            <%= link_to reveal_game_path(id: @game.id, x: r, y: c), method: :post  do %>
+          <% if @game.cells.find_by(x: r, y: c)&.is_revealed == nil || @game.cells.find_by(x: r, y: c)&.is_revealed == false %>
+            <td>
+              <%= link_to reveal_game_path(id: @game.id, x: r, y: c), method: :post  do %>
                 <i class="fa fa-eye"></i>
               <% end %>
-          </td>
-        <% else %>
-          <td><%= @game.cells.find_by(x: r, y: c)&.valor %></td>
-        <% end %>
+              <%= link_to flag_game_path(id: @game.id, x: r, y: c, status: 'flag'), method: :post  do %>
+                <% if @game.cells.find_by(x: r, y: c)&.status == 'flag' %>
+                  <i class="fa fa-flag" style="color:red"></i>
+                <% else %>
+                  <i class="fa fa-flag"></i>
+                <% end %>
+              <% end %>
+              <%= link_to flag_game_path(id: @game.id, x: r, y: c, status: 'question'), method: :post  do %>
+                 <% if @game.cells.find_by(x: r, y: c)&.status == 'question' %>
+                  <i class="fa fa-question" style="color:red"></i>
+                <% else %>
+                  <i class="fa fa-question"></i>
+                <% end %>
+              <% end %>
+            </td>
+          <% else %>
+            <td> <%= @game.cells.find_by(x: r, y: c)&.valor %> </td>
+          <% end %>
       <% end %>
     </tr>
   <% end %>
