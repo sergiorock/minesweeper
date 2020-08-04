@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_game, only: [:show, :edit, :update, :destroy, :reveal]
 
   # GET /games
