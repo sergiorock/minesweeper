@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>X:</strong>
+  <%= @cell.x %>
+</p>
+
+<p>
+  <strong>Y:</strong>
+  <%= @cell.y %>
+</p>
+
+<p>
+  <strong>Valor:</strong>
+  <%= @cell.valor %>
+</p>
+
+<p>
+  <strong>Is revealed:</strong>
+  <%= @cell.is_revealed %>
+</p>
+
+<p>
+  <strong>Game:</strong>
+  <%= @cell.game %>
+</p>
+
+<%= link_to 'Edit', edit_cell_path(@cell) %> |
+<%= link_to 'Back', cells_path %>
