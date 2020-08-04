@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy]
+  before_action :set_game, only: [:show, :edit, :update, :destroy, :reveal]
 
   # GET /games
   # GET /games.json
@@ -58,6 +58,40 @@ class GamesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to games_url, notice: 'Game was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def reveal
+    x = params[:x]
+    y = params[:y]
+    cell = @game.cells.find_by(x: x, y: y)
+
+    if cell.valor == "bomb"
+      @game.update(status: :'lost', finalized_at: DateTime.now)
+      @game.cells.update_all(is_revealed: :true)
+      respond_to do |format|
+        format.html { redirect_to @game, notice: 'Perdiste' }
+        format.json { render json: @game, status: :ok}
+      end
+    else
+      cell.reveal
+      cells_amount = @game.cells.size
+      bombs_amount = @game.cells.where(valor: :'bomb').size
+      cells_revealed_amount = @game.cells.where(is_revealed: :true).size
+
+      if cells_amount - bombs_amount == cells_revealed_amount
+        @game.update(status: :'won', finalized_at: DateTime.now)
+
+        respond_to do |format|
+          format.html { redirect_to @game, notice: 'Ganaste' }
+          format.json { render json: @game, status: :ok}
+        end
+      else
+        respond_to do |format|
+          format.html { redirect_to @game, notice: 'Zafaste' }
+          format.json { render json: @game, status: :ok}
+        end
+      end
     end
   end
 
