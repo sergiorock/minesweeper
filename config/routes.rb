@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  devise_for :users
   resources :cells
   resources :games do
     post :reveal, on: :member

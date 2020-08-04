@@ -45,5 +45,4 @@ class Game < ApplicationRecord
   def string_cell(pos_x, pos_y)
     return "x#{pos_x}y#{pos_y}"
   end
-  
 end
