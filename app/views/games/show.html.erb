@@ -15,5 +15,46 @@
   <%= @game.mines %>
 </p>
 
+<p>
+  <strong>Estado:</strong>
+    <% if @game.status == 'lost'%>
+      You Lost!
+      <p><strong>Finalized at:</strong> <%= @game.finalized_at %><p>
+    <% elsif @game.status == 'won'%>
+      You Win!
+      <p><strong>Finalized at:</strong> <%= @game.finalized_at %><p>
+    <% else %>
+      Active
+    <% end %>
+</p>
+
+<table>
+  <% for r in 1..@game.rows %>
+    <tr>
+      <% for c in 1..@game.columns %>
+            <td>X</td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+td {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+</style>
+
