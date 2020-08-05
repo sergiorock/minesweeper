@@ -72,7 +72,7 @@ class GamesController < ApplicationController
       @game.cells.update_all(is_revealed: :true)
       respond_to do |format|
         format.html { redirect_to @game, notice: 'Perdiste' }
-        format.json { render json: @game, status: :ok}
+        format.json { render json: @game.as_json(include: :cells), status: :ok}
       end
     else
       cell.reveal
@@ -85,12 +85,12 @@ class GamesController < ApplicationController
 
         respond_to do |format|
           format.html { redirect_to @game, notice: 'Ganaste' }
-          format.json { render json: @game, status: :ok}
+          format.json { render json: @game.as_json(include: :cells), status: :ok}
         end
       else
         respond_to do |format|
           format.html { redirect_to @game, notice: 'Zafaste' }
-          format.json { render json: @game, status: :ok}
+          format.json { render json: @game.as_json(include: :cells), status: :ok}
         end
       end
     end
@@ -108,7 +108,7 @@ class GamesController < ApplicationController
 
       respond_to do |format|
         format.html { redirect_to @game, notice: 'Limpiaste una celda' }
-        format.json { render json: @game, status: :ok}
+        format.json { render json: @game.as_json(include: :cells), status: :ok}
       end
 
     else
@@ -117,12 +117,12 @@ class GamesController < ApplicationController
       if cell.status == 'flag'
         respond_to do |format|
           format.html { redirect_to @game, notice: 'Flagueaste una celda' }
-          format.json { render json: @game, status: :ok}
+          format.json { render json: @game.as_json(include: :cells), status: :ok}
         end
       else
         respond_to do |format|
           format.html { redirect_to @game, notice: 'Marcaste una celda' }
-          format.json { render json: @game, status: :ok}
+          format.json { render json: @game.as_json(include: :cells), status: :ok}
         end
       end
     end

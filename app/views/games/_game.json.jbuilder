@@ -6,4 +6,5 @@ json.cells game.cells do |c|
   json.y c.y
   json.valor c.valor
   json.is_revealed c.is_revealed
+  json.status c.status
 end
