@@ -73,6 +73,7 @@ class GamesController < ApplicationController
 
     if cell.valor == "bomb"
       @game.update(status: :'lost', finalized_at: DateTime.now)
+      @game.update(time_spent: @game.get_time)
       @game.cells.update_all(is_revealed: :true)
       respond_to do |format|
         format.html { redirect_to @game, notice: 'Perdiste' }
@@ -86,6 +87,7 @@ class GamesController < ApplicationController
 
       if cells_amount - bombs_amount == cells_revealed_amount
         @game.update(status: :'won', finalized_at: DateTime.now)
+        @game.update(time_spent: @game.get_time)
 
         respond_to do |format|
           format.html { redirect_to @game, notice: 'Ganaste' }
