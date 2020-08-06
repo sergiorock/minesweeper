@@ -5,7 +5,12 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
-    @games = Game.all
+    if params[:email].present?
+      @games = Game.where('email ILIKE ?', "%#{params[:email]}%")
+      # ('name LIKE ?', "%#{pattern}%")
+    else
+      @games = Game.all.order(id: :desc)
+    end
   end
 
   # GET /games/1
@@ -137,6 +142,6 @@ class GamesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def game_params
-      params.require(:game).permit(:rows, :columns, :mines)
+      params.require(:game).permit(:email, :rows, :columns, :mines)
     end
 end
