@@ -1,24 +1,15 @@
-# README
+# MINESWIPPER API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+API
+* I created app on ruby on rails and postgres as database because I needed deploy on heroku.
+* Due to I have better domain on "rails" I've created the views in ".erb" to ensure correct functionality in minor time.
+* After checking correct functionality I proceed create the client.
 
-Things you may want to cover:
+Client
+* I made the client with 'vuejs'
+* I created a HTML file and add 'Vue' CDN to gain time instead create a new app.
+* I added bootstrap CDN to use grid. And I add Axios CDN to make the ajax requests.
 
-* Ruby version
+API URL: https://minesweeper-rails.herokuapp.com
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Client URL: https://sergiorock.github.io/mineswipper-client
