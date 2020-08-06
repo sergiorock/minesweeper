@@ -86,9 +86,9 @@ class GamesController < ApplicationController
       cells_revealed_amount = @game.cells.where(is_revealed: :true).size
 
       if cells_amount - bombs_amount == cells_revealed_amount
-        @game.update(time_spent: TimeDifference.between(created_at, finalized:at).in_minutes)
-        @game.update(time_spent: @game.get_time)
-
+        @game.update(status: :'won', finalized_at: DateTime.now)
+        @game.update(time_spent: TimeDifference.between(@game.created_at, @game.finalized_at).in_minutes)
+  
         respond_to do |format|
           format.html { redirect_to @game, notice: 'Ganaste' }
           format.json { render json: @game.as_json(include: :cells), status: :ok}
