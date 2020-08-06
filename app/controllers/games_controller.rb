@@ -7,7 +7,6 @@ class GamesController < ApplicationController
   def index
     if params[:email].present?
       @games = Game.where('email ILIKE ?', "%#{params[:email]}%")
-      # ('name LIKE ?', "%#{pattern}%")
     else
       @games = Game.all.order(id: :desc)
     end
