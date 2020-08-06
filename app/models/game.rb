@@ -22,17 +22,6 @@ class Game < ApplicationRecord
     end
   end
 
-  def get_time
-    finalized = self.finalized_at || ''
-    created = self.created_at || ''
-    if finalized != ''
-      TimeDifference.between(created, finalized).in_minutes
-    else
-      'game active'
-    end
-  end
-
-
   private
   def get_bombs(x, y, amount)
     bombs = []

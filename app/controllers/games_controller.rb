@@ -73,7 +73,7 @@ class GamesController < ApplicationController
 
     if cell.valor == "bomb"
       @game.update(status: :'lost', finalized_at: DateTime.now)
-      @game.update(time_spent: @game.get_time)
+      @game.update(time_spent: TimeDifference.between(@game.created_at, @game.finalized_at).in_minutes)
       @game.cells.update_all(is_revealed: :true)
       respond_to do |format|
         format.html { redirect_to @game, notice: 'Perdiste' }
@@ -86,7 +86,7 @@ class GamesController < ApplicationController
       cells_revealed_amount = @game.cells.where(is_revealed: :true).size
 
       if cells_amount - bombs_amount == cells_revealed_amount
-        @game.update(status: :'won', finalized_at: DateTime.now)
+        @game.update(time_spent: TimeDifference.between(created_at, finalized:at).in_minutes)
         @game.update(time_spent: @game.get_time)
 
         respond_to do |format|
@@ -143,6 +143,6 @@ class GamesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def game_params
-      params.require(:game).permit(:email, :rows, :columns, :mines)
+      params.require(:game).permit(:email, :rows, :columns, :mines, :time_spent)
     end
 end
